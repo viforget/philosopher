@@ -7,22 +7,22 @@ void	*th_start(void *tmp)
 
 	a = 1;
 	ph = (t_ph *)tmp;
-	printf("%d I'm alive\n", ph->index);
 	while (!*(ph->tm_start))
 		;
 	if (ph->index % 2 == 0)
 	{
-		printf("%d is thinking\n", ph->index);
+		print_status(time_to_mili() - *ph->tm_start, ph->index, THINK, ph->tm_start);
+		//printf("%d is thinking\n", ph->index);
 		usleep(10);
 	}
-	while (a == 1)
+	while (a == 1 && *(ph->tm_start) != 0)
 	{
 		take_fork_eat(ph);
 		a = sleep_ph(ph);
-		if (a == 1)
-			printf("%d is thinking\n", ph->index);
+		if (a == 1 && *(ph->tm_start) != 0)
+			print_status(time_to_mili() - *ph->tm_start, ph->index, THINK, ph->tm_start);
 	}
-	printf("%d is dead\n", ph->index);
+	*(ph->tm_start) = 0;
 	pthread_exit(NULL);
 }
 
@@ -64,7 +64,6 @@ void	create_thread(t_info info)
 	}
 	usleep(1000);
 	ts = time_to_mili();
-	printf("%lu\n", ts);
 	while (i--)
 	{
 		pthread_join(th[i + 1], NULL);

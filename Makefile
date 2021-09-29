@@ -13,6 +13,7 @@ SRCS =	srcs/main.c\
 		srcs/create_thread.c\
 		srcs/timer.c\
 		srcs/eat_sleep_think.c\
+		srcs/write.c\
 
 OBJ = $(SRCS:%.c=%.o)
 

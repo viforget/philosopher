@@ -7,6 +7,12 @@
 
 # include "../libft/libft.h"
 
+# define FORK " as taken a fork\n"
+# define EAT " is eating\n"
+# define SLEEP " is sleeping\n"
+# define THINK " is thinking\n"
+# define DEAD " is dead\n"
+
 typedef struct s_info
 {
 	int			nb_philo;
@@ -62,5 +68,11 @@ unsigned long	time_to_mili();
 
 void	take_fork_eat(t_ph *ph);
 int		sleep_ph(t_ph *ph);
+
+/*
+** WRITE.C
+*/
+
+void	print_status(int time, int ph, char *str, unsigned long *c);
 
 #endif
