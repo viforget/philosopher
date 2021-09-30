@@ -30,6 +30,7 @@ typedef struct 				s_ph
 	unsigned long			*tm_start;
 	unsigned long			*tm_lst_eat;
 	pthread_mutex_t 		*mutex;
+	pthread_mutex_t 		*talking_stick;
 }							t_ph;
 
 /*
@@ -73,6 +74,6 @@ int		sleep_ph(t_ph *ph);
 ** WRITE.C
 */
 
-void	print_status(int time, int ph, char *str, unsigned long *c);
+void	print_status(int time, int p, char *str, t_ph *ph);
 
 #endif
