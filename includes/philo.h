@@ -31,6 +31,7 @@ typedef struct 				s_ph
 	unsigned long			*tm_lst_eat;
 	pthread_mutex_t 		*mutex;
 	pthread_mutex_t 		*talking_stick;
+	int						*meal;
 }							t_ph;
 
 /*
@@ -67,7 +68,7 @@ unsigned long	time_to_mili();
 ** EAT_SLEEP_THINK.C
 */
 
-void	take_fork_eat(t_ph *ph);
+int	take_fork_eat(t_ph *ph);
 int		sleep_ph(t_ph *ph);
 
 /*

@@ -1,16 +1,49 @@
 #include "philo.h"
 
-void	take_fork_eat(t_ph *ph)
+void	is_full(t_ph *ph)
+{
+	int i;
+	int ch;
+
+	i = 0;
+	ch = 0;
+	if (ph->info.nb_eat != -1 && *(ph->tm_lst_eat) != 0)
+	{
+		ph->meal[ph->index]++;
+		while(ch == 0 && i < ph->info.nb_philo)
+		{
+			if (ph->meal[i] < ph->info.nb_eat)
+				ch = 1;
+			i++;
+		}
+		
+		if (ch == 0)
+			*(ph->tm_start) = 0;
+	}
+}
+
+int	take_fork_eat(t_ph *ph)
 {
 	pthread_mutex_lock(&ph->mutex[ph->index]);
 	print_status(time_to_mili() - *ph->tm_start, ph->index, FORK, ph);
 	pthread_mutex_lock(&ph->mutex[(ph->index + 1) % ph->info.nb_philo]);
 	print_status(time_to_mili() - *ph->tm_start, ph->index, FORK, ph);
-	print_status(time_to_mili() - *ph->tm_start, ph->index, EAT, ph);
 	*(ph->tm_lst_eat) = time_to_mili();
-	usleep(ph->info.tm_eat * 1000);
+	if (ph->info.tm_die < ph->info.tm_eat)
+	{
+		usleep(ph->info.tm_die * 1000);
+		print_status(time_to_mili() - *ph->tm_start, ph->index, DEAD, ph);
+		*(ph->tm_start) = 0;
+	}
+	else
+	{
+		print_status(time_to_mili() - *ph->tm_start, ph->index, EAT, ph);
+		is_full(ph);
+		usleep(ph->info.tm_eat * 1000);
+	}
 	pthread_mutex_unlock(&ph->mutex[ph->index]);
 	pthread_mutex_unlock(&ph->mutex[(ph->index + 1) % ph->info.nb_philo]);
+	return (*(ph->tm_start) != 0);
 }
 
 int	sleep_ph(t_ph *ph)
