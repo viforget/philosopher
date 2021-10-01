@@ -1,22 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   eat_sleep_think.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/01 14:21:26 by viforget          #+#    #+#             */
+/*   Updated: 2021/10/01 14:21:28 by viforget         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	is_full(t_ph *ph)
 {
-	int i;
-	int ch;
+	int	i;
+	int	ch;
 
 	i = 0;
 	ch = 0;
 	if (ph->info.nb_eat != -1 && *(ph->tm_lst_eat) != 0)
 	{
 		ph->meal[ph->index]++;
-		while(ch == 0 && i < ph->info.nb_philo)
+		while (ch == 0 && i < ph->info.nb_philo)
 		{
 			if (ph->meal[i] < ph->info.nb_eat)
 				ch = 1;
 			i++;
 		}
-		
 		if (ch == 0)
 			*(ph->tm_start) = 0;
 	}
@@ -52,7 +63,7 @@ int	sleep_ph(t_ph *ph)
 
 	time = time_to_mili();
 	if (*(ph->tm_start) != 0)
-	print_status(time_to_mili() - *ph->tm_start, ph->index, SLEEP, ph);
+		print_status(time_to_mili() - *ph->tm_start, ph->index, SLEEP, ph);
 	if (time + ph->info.tm_slp > *(ph->tm_lst_eat) + ph->info.tm_die)
 	{
 		usleep((*(ph->tm_lst_eat) + ph->info.tm_die - time) * 1000);

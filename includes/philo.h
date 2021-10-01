@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/01 14:08:10 by viforget          #+#    #+#             */
+/*   Updated: 2021/10/01 14:08:12 by viforget         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -22,15 +34,15 @@ typedef struct s_info
 	int			nb_eat;
 }				t_info;
 
-typedef struct 				s_ph
+typedef struct s_ph
 {
 	int						index;
 	t_info					info;
 	char					*is_dead;
 	unsigned long			*tm_start;
 	unsigned long			*tm_lst_eat;
-	pthread_mutex_t 		*mutex;
-	pthread_mutex_t 		*talking_stick;
+	pthread_mutex_t			*mutex;
+	pthread_mutex_t			*talking_stick;
 	int						*meal;
 }							t_ph;
 
@@ -62,7 +74,7 @@ void			create_thread(t_info info);
 ** TIMER.C
 /*/
 
-unsigned long	time_to_mili();
+unsigned long	time_to_mili(void);
 
 /*
 ** EAT_SLEEP_THINK.C
