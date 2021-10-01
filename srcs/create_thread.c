@@ -1,12 +1,10 @@
 #include "philo.h"
 
-void	*th_start(void *tmp)
+void	execute_thread(t_ph *ph)
 {
-	t_ph	*ph;
 	int 	a;
 
 	a = 1;
-	ph = (t_ph *)tmp;
 	while (!*(ph->tm_start))
 		;
 	if (ph->index % 2 == 0)
@@ -25,6 +23,17 @@ void	*th_start(void *tmp)
 			*(ph->tm_start) = 0;
 	}
 	*(ph->tm_start) = 0;
+}
+
+void	*th_start(void *tmp)
+{
+	t_ph			*ph;
+	pthread_t		th;
+
+	pthread_create(&th, NULL, checker, tmp);
+	ph = (t_ph *)tmp;
+	execute_thread(ph);
+	pthread_join(th, NULL);
 	pthread_exit(NULL);
 }
 
@@ -52,7 +61,7 @@ t_ph	*fully_ph(t_info info, char *id, int i, unsigned long *ts, pthread_mutex_t 
 
 void	create_thread(t_info info)
 {
-	pthread_t		th[info.nb_philo + 1];	//PENSER A LES MALLOC
+	pthread_t		th[info.nb_philo];	//PENSER A LES MALLOC
 	t_ph			*ph[info.nb_philo];		//PENSER A LES MALLOC
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	stick;
@@ -71,13 +80,13 @@ void	create_thread(t_info info)
 	{
 		pthread_mutex_init(&mutex[i], NULL);
 		ph[i] = fully_ph(info, &id, i, &ts, mutex, &stick, meal);	
-		pthread_create(&th[i + 1], NULL, th_start, (void *)ph[i]);
+		pthread_create(&th[i], NULL, th_start, (void *)ph[i]);
 		i++;
 	}
 	usleep(1000);
 	ts = time_to_mili();
 	while (i--)
 	{
-		pthread_join(th[i + 1], NULL);
+		pthread_join(th[i], NULL);
 	}
 }

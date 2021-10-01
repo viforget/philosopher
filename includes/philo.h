@@ -38,25 +38,25 @@ typedef struct 				s_ph
 ** PARSER.C
 */
 
-t_info	parser(int ac, char **av);
+t_info			parser(int ac, char **av);
 
 /*
 ** CHECK_PARSING.C
 */
 
-int		check_parsing(t_info info);
+int				check_parsing(t_info info);
 
 /*
 ** ERROR.C
 */
 
-int		print_error(int value);
+int				print_error(int value);
 
 /*
 ** CREATE_THREAD.C
 */
 
-void	create_thread(t_info info);
+void			create_thread(t_info info);
 
 /*
 ** TIMER.C
@@ -68,13 +68,19 @@ unsigned long	time_to_mili();
 ** EAT_SLEEP_THINK.C
 */
 
-int	take_fork_eat(t_ph *ph);
-int		sleep_ph(t_ph *ph);
+int				take_fork_eat(t_ph *ph);
+int				sleep_ph(t_ph *ph);
 
 /*
 ** WRITE.C
 */
 
-void	print_status(int time, int p, char *str, t_ph *ph);
+void			print_status(int time, int p, char *str, t_ph *ph);
+
+/*
+** SECOND_THREAD.C
+*/
+
+void			*checker(void *tmp);
 
 #endif
