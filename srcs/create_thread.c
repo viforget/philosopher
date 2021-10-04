@@ -1,28 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_thread.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/04 10:34:23 by viforget          #+#    #+#             */
+/*   Updated: 2021/10/04 22:03:23 by viforget         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	execute_thread(t_ph *ph)
 {
-	int 	a;
-
-	a = 1;
-	while (!*(ph->tm_start))
-		;
+	pthread_mutex_lock(&ph->mutex[ph->index]);
+	pthread_mutex_unlock(&ph->mutex[ph->index]);
 	if (ph->index % 2 == 0)
 	{
-		print_status(time_to_mili() - *ph->tm_start, ph->index, THINK, ph);
-		usleep(10);
+		print_status(THINK, ph, 0);
+		usleep(100);
 	}
-	while (a == 1 && *(ph->tm_start) != 0)
+	while (*(ph->tm_start) != 0)
 	{
-		a = take_fork_eat(ph);
-		if (a)
-			a = sleep_ph(ph);
-		if (a == 1 && *(ph->tm_start) != 0)
-			print_status(time_to_mili() - *ph->tm_start, ph->index, THINK, ph);
-		else
-			*(ph->tm_start) = 0;
+		take_fork_eat(ph);
+		sleep_ph(ph);
+		print_status(THINK, ph, 0);
 	}
-	*(ph->tm_start) = 0;
 }
 
 void	*th_start(void *tmp)
@@ -37,56 +41,44 @@ void	*th_start(void *tmp)
 	pthread_exit(NULL);
 }
 
-t_ph	*fully_ph(t_info info, char *id, int i, unsigned long *ts, pthread_mutex_t *mutex, pthread_mutex_t *stick, int *meal)
+void	unlock_thread(pthread_mutex_t *mutex, int i)
 {
-	t_ph			*ph;
-	unsigned long	*a;
-	int				j;
-
-	j = 0;
-	while (j < info.nb_philo)
-		meal[j++] = 0;
-	a = malloc(sizeof(unsigned long));
-	ph = malloc(sizeof(t_ph));
-	ph->index = i;
-	ph->info = info;
-	ph->is_dead = id;
-	ph->tm_start = ts;
-	ph->tm_lst_eat = a;
-	ph->mutex = mutex;
-	ph->talking_stick = stick;
-	ph->meal = meal;
-	return (ph);
+	while (i--)
+		pthread_mutex_unlock(&mutex[i]);
 }
 
-void	create_thread(t_info info)
+unsigned long	*loop_mutex(pthread_mutex_t *mutex, unsigned long *ts)
 {
-	pthread_t		th[info.nb_philo];	//PENSER A LES MALLOC
-	t_ph			*ph[info.nb_philo];		//PENSER A LES MALLOC
+	pthread_mutex_init(mutex, NULL);
+	pthread_mutex_lock(mutex);
+	return (ts);
+}
+
+void	create_thread(t_info info, int i, unsigned long ts)
+{
+	pthread_t		*th;
+	t_ph			**ph;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	stick;
-	int				i;
-	char			id;
-	unsigned long	ts;
 	int				*meal;
 
-	i = 0;
-	id = 0;
-	ts = 0;
-	meal = malloc(sizeof(int) * info.nb_philo);
-	mutex = malloc(sizeof(pthread_mutex_t) * info.nb_philo);
+	ph = malloc(sizeof(t_ph *) * info.nb_philo);
+	alloc_2(&mutex, &meal, &th, info);
 	pthread_mutex_init(&stick, NULL);
 	while (i < info.nb_philo)
 	{
-		pthread_mutex_init(&mutex[i], NULL);
-		ph[i] = fully_ph(info, &id, i, &ts, mutex, &stick, meal);	
+		ph[i]->tm_start = *loop_mutex(&mutex[i], NULL);
+		ph[i] = fully_ph(info, mutex, &stick, meal);
 		pthread_create(&th[i], NULL, th_start, (void *)ph[i]);
 		i++;
 	}
-	usleep(1000);
+	usleep(150000);
 	ts = time_to_mili();
+	unlock_thread(mutex, i);
 	while (i--)
 	{
 		pthread_join(th[i], NULL);
+		free_struct(ph[i]);
 	}
+	free4(mutex, meal, th, ph);
 }

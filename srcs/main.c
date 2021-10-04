@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/04 22:06:44 by viforget          #+#    #+#             */
+/*   Updated: 2021/10/04 22:06:45 by viforget         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	main(int ac, char **av)
@@ -9,6 +21,6 @@ int	main(int ac, char **av)
 	info = parser(ac, av + 1);
 	if (!check_parsing(info))
 		return (print_error(1));
-	create_thread(info);
+	create_thread(info, 0, 0);
 	return (0);
 }

@@ -1,27 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/04 22:05:26 by viforget          #+#    #+#             */
+/*   Updated: 2021/10/04 22:05:33 by viforget         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	print_status(int time, int p, char *str, t_ph *ph)
+void	print_status(char *str, t_ph *ph, int dead)
 {
 	char	*tm;
 	char	*phi;
 	char	*tmp;
 	char	*tmp2;
-	
+
 	if (*(ph->tm_start))
 	{
-		tm = ft_itoa(time);
-		phi = ft_itoa(p);
-		tmp = ft_strjoin(tm, " ");
-		free(tm);
-		tmp2 = ft_strjoin(tmp, phi);
-		free(tmp);
+		phi = ft_itoa(ph->index);
+		tmp = ft_strjoin(" ", phi);
 		free(phi);
-		tmp = ft_strjoin(tmp2, str);
-		free(tmp2);
+		tmp2 = ft_strjoin(tmp, str);
+		free(tmp);
 		pthread_mutex_lock(ph->talking_stick);
+		tm = ft_itoa(time_to_mili() - *ph->tm_start);
+		tmp = ft_strjoin(tm, tmp2);
+		free(tmp2);
+		free(tm);
 		if (*(ph->tm_start))
 			write(1, tmp, ft_strlen(tmp));
-		if (!ft_strcmp(str, DEAD))
+		if (dead)
 			*(ph->tm_start) = 0;
 		pthread_mutex_unlock(ph->talking_stick);
 		free(tmp);
