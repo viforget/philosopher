@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 10:34:21 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:04:02 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/04 22:11:20 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_ph	*fully_ph(t_info info, pthread_mutex_t *m, pthread_mutex_t *st, int *ml)
 
 	j = 0;
 	while (j < info.nb_philo)
-		meal[j++] = 0;
+		ml[j++] = 0;
 	a = malloc(sizeof(unsigned long));
 	ph = malloc(sizeof(t_ph));
 	ph->index = i++;

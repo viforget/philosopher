@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 10:34:23 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:03:23 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/04 22:16:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	create_thread(t_info info, int i, unsigned long ts)
 	pthread_mutex_init(&stick, NULL);
 	while (i < info.nb_philo)
 	{
-		ph[i]->tm_start = *loop_mutex(&mutex[i], NULL);
 		ph[i] = fully_ph(info, mutex, &stick, meal);
+		ph[i]->tm_start = loop_mutex(&mutex[i], &ts);
 		pthread_create(&th[i], NULL, th_start, (void *)ph[i]);
 		i++;
 	}
@@ -80,5 +80,5 @@ void	create_thread(t_info info, int i, unsigned long ts)
 		pthread_join(th[i], NULL);
 		free_struct(ph[i]);
 	}
-	free4(mutex, meal, th, ph);
+	free2(mutex, meal, th, ph);
 }

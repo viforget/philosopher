@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:08:10 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:08:02 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/04 22:21:40 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void			*checker(void *tmp);
 */
 
 void			free_struct(t_ph *ph);
-void			alloc_2(pthread_mutex_t **mutex, int **meal, t_info info);
+void			alloc_2(pthread_mutex_t **m, int **meal, pthread_t **th,
+					t_info info);
 void			free2(pthread_mutex_t *mutex, int *meal, pthread_t *th,
 					t_ph **ph);
 void			init_var(int *i, unsigned long *ts);
