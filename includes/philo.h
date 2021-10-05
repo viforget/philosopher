@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:08:10 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/05 11:29:25 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 17:52:23 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # include "../libft/libft.h"
 
-# define FORK " as taken a fork\n"
+# define FORK " has taken a fork\n"
 # define EAT " is eating\n"
 # define SLEEP " is sleeping\n"
 # define THINK " is thinking\n"
@@ -104,10 +104,11 @@ void			*checker(void *tmp);
 void			free_struct(t_ph *ph);
 void			alloc_2(pthread_mutex_t **m, int **meal, pthread_t **th,
 					t_info info);
-void			free2(pthread_mutex_t *mutex, int *meal, pthread_t *th,
-					t_ph **ph);
+void			free2(void *mutex, void *meal, void *th,
+					void *ph);
 void			init_var(int *i, unsigned long *ts);
 t_ph			*fully_ph(t_info info, pthread_mutex_t *m,
 					pthread_mutex_t *st, int *ml);
+void			init_stick(pthread_mutex_t	*stick, int exit, t_ph **ph);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 10:34:23 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/05 11:29:28 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:03:11 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_thread(t_ph *ph)
 	if (ph->index % 2 == 0)
 	{
 		print_status(THINK, ph, 0);
-		usleep(100);
+		usleep(800);
 	}
 	while (*(ph->tm_start) != 0)
 	{
@@ -64,7 +64,7 @@ void	create_thread(t_info info, int i, unsigned long ts)
 
 	ph = malloc(sizeof(t_ph *) * info.nb_philo);
 	alloc_2(&mutex, &meal, &th, info);
-	pthread_mutex_init(&stick, NULL);
+	init_stick(&stick, meal == NULL, ph);
 	while (i < info.nb_philo)
 	{
 		ph[i] = fully_ph(info, mutex, &stick, meal);

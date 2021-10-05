@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:21:26 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/05 11:29:57 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:08:25 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,13 @@ void	take_fork_eat(t_ph *ph)
 	*(ph->tm_lst_eat) = time_to_mili();
 	print_status(EAT, ph, 2);
 	*(ph->tm_lst_eat) = time_to_mili();
-	if (ph->info.tm_die < ph->info.tm_eat)
-	{
-		usleep(ph->info.tm_die * 1000);
-		print_status(DEAD, ph, 1);
-		*(ph->tm_start) = 0;
-	}
-	else
-	{
-		usleep(ph->info.tm_eat * 1000);
-	}
+	usleep(ph->info.tm_eat * 1000);
 	pthread_mutex_unlock(&ph->mutex[ph->index]);
 	pthread_mutex_unlock(&ph->mutex[(ph->index + 1) % ph->info.nb_philo]);
 }
 
 void	sleep_ph(t_ph *ph)
 {
-	unsigned long	time;
-
-	time = time_to_mili();
 	print_status(SLEEP, ph, 0);
 	usleep(ph->info.tm_slp * 1000);
 }

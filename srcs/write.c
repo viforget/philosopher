@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 22:05:26 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/05 11:33:35 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 17:49:28 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_status(char *str, t_ph *ph, int dead)
 
 	if (*(ph->tm_start))
 	{
-		phi = ft_itoa(ph->index);
+		phi = ft_itoa(ph->index + 1);
 		tmp = ft_strjoin(" ", phi);
 		free(phi);
 		tmp2 = ft_strjoin(tmp, str);

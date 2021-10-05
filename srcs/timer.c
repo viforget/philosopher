@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 22:04:51 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/05 11:30:28 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:04:03 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ unsigned long	time_to_mili(void)
 
 unsigned long	start_go(void)
 {
-	usleep(150000);
+	usleep(700000);
 	return (time_to_mili());
 }
