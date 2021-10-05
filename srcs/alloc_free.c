@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 10:34:21 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:11:20 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 10:53:39 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	free_struct(t_ph *ph)
 
 void	alloc_2(pthread_mutex_t **m, int **meal, pthread_t **th, t_info info)
 {
-	*m = malloc(sizeof(pthread_mutex_t) * info.nb_philo);
 	*meal = malloc(sizeof(int) * info.nb_philo);
 	*th = malloc(sizeof(pthread_t) * info.nb_philo);
+	*m = malloc(sizeof(pthread_mutex_t) * info.nb_philo);
 }
 
 void	free2(pthread_mutex_t *mutex, int *meal, pthread_t *th, t_ph **ph)
@@ -41,8 +41,11 @@ t_ph	*fully_ph(t_info info, pthread_mutex_t *m, pthread_mutex_t *st, int *ml)
 	static int		i = 0;
 
 	j = 0;
-	while (j < info.nb_philo)
-		ml[j++] = 0;
+	if (i == 0)
+	{
+		while (j < info.nb_philo)
+			ml[j++] = 0;
+	}
 	a = malloc(sizeof(unsigned long));
 	ph = malloc(sizeof(t_ph));
 	ph->index = i++;

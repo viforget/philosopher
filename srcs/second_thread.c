@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:21:34 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 20:31:27 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 11:25:46 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	*checker(void *tmp)
 	*(ph->tm_lst_eat) = time_to_mili();
 	while (*(ph->tm_start))
 	{
-		if ((*(ph->tm_lst_eat) + die) - time_to_mili() < 0)
+		if ((*(ph->tm_lst_eat) + die) < time_to_mili())
 		{
 			print_status(DEAD, ph, 1);
 			*(ph->tm_start) = 0;
 		}
-		is_full(ph);
+		usleep(1000);
 	}
 	pthread_exit(NULL);
 }

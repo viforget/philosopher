@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 10:34:23 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:16:44 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 11:29:28 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	create_thread(t_info info, int i, unsigned long ts)
 		pthread_create(&th[i], NULL, th_start, (void *)ph[i]);
 		i++;
 	}
-	usleep(150000);
-	ts = time_to_mili();
+	ts = start_go();
 	unlock_thread(mutex, i);
+	loop_isf(info, &ts, meal);
 	while (i--)
 	{
 		pthread_join(th[i], NULL);

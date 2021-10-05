@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:08:10 by viforget          #+#    #+#             */
-/*   Updated: 2021/10/04 22:21:40 by viforget         ###   ########.fr       */
+/*   Updated: 2021/10/05 11:29:25 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ void			create_thread(t_info info, int i, unsigned long ts);
 /*/
 
 unsigned long	time_to_mili(void);
+unsigned long	start_go(void);
 
 /*
 ** EAT_SLEEP_THINK.C
 */
 
-void			is_full(t_ph *ph);
+void			is_full(t_info info, unsigned long *ts, int *meal);
+void			loop_isf(t_info info, unsigned long *ts, int *meal);
 void			take_fork_eat(t_ph *ph);
 void			sleep_ph(t_ph *ph);
 
